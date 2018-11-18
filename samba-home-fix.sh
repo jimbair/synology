@@ -108,5 +108,5 @@ if [ $? -eq 0 ]; then
 # and rollback if it explodes and restart again (and verify)
 else
     echo "ERROR: Samba not able to restart. Please troubleshoot."
-	exit 1
+    exit 1
 fi
