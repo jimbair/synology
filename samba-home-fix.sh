@@ -10,16 +10,15 @@
 #
 # This removes that problem. Thanks Linux!
 #
-# v.01 - Jim Bair
+# v.02 - Jim Bair
+#
+# NOTE: Maybe add this?
+# synoservice --disable pkgctl-SynoFinder
 
 # Our config and init scripts
 ourConf='/etc/samba/smb.share.conf'
-ourInit='/usr/syno/etc/rc.sysv/S80samba.sh'
 if [ ! -s "${ourConf}" ]; then
   echo "ERROR: Our share config $ourConf is missing - exiting."
-  exit 1
-elif [ ! -s "${ourInit}" ]; then
-  echo "ERROR: Our init script $ourInit is missing - exiting."
   exit 1
 fi
 
@@ -97,7 +96,7 @@ cat $ourTemp > $ourConf
 rm -f $ourTemp $lockfile
 
 # Restart samba
-${ourInit} restart
+synopkg restart SMBService
 
 # All done
 if [ $? -eq 0 ]; then
@@ -108,5 +107,5 @@ if [ $? -eq 0 ]; then
 # and rollback if it explodes and restart again (and verify)
 else
     echo "ERROR: Samba not able to restart. Please troubleshoot."
-    exit 1
+	exit 1
 fi
